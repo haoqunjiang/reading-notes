@@ -27,4 +27,16 @@
 	- `Content-Encoding:: gzip` (HTTP Response)
 	- gzip any text response (HTML documents, scripts, stylesheets, XML & JSON)
 	- Proxy Caching: `Vary: Accept-Encoding` (HTTP Response) causing the proxy to cache multiple versions of the response, one for each value of the `Accept-Encoding` request header
-	- all web browsers in comuse today support gzip
+	- all web browsers in common use today support gzip
+
+5. Put Stylesheets at the Top
+
+	- The problem with putting the stylesheets near the bottom of the document is that it prohibits progressive rendering in many browsers (especially IE)
+
+	  NOTE: [can't reproduce this behavior](http://stackoverflow.com/questions/19644650/modern-browsers-progressive-rendering-anc-css-at-bottom)
+
+	- prefer `<link>` than inline `@import` as the latter may cause the stylesheets to be downloaded last and the result in Flash of Unstyled Content (FOUC), besides it causes the stylesheets to be downloaded sequentially (all particularly in IE, I can't reproduce that in Chrome)
+
+	  for more information, refer to [this article](http://www.stevesouders.com/blog/2009/04/09/dont-use-import/)
+
+6. Put Scripts at the Bottom
