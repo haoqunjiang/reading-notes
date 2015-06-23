@@ -1,4 +1,5 @@
-##Understanding JavaScript Events##
+Understanding JavaScript Events
+-------------------------------
 
 - JavaScript events handlers don't run until the the thread is free.
 
@@ -48,7 +49,11 @@
 - Issac Schlueter advocated using `throw`s purely as `assert`-like constructs, a way of bringing applications to a halt when they're doing something completely unexpected.
 
 
-##Distributing Events##
+
+
+
+Distributing Events
+-------------------
 
 - PubSub (Publish/Subscribe)
 
@@ -70,12 +75,58 @@
 
   One possible solution:
 
-        var tasks = [];
-        setInterval(function() {
-            var nextTask;
-            if (nextTask = tasks.shift()) {
-                nextTask();
-            }
-        }, 0);
+      var tasks = [];
+      setInterval(function() {
+          var nextTask;
+          if (nextTask = tasks.shift()) {
+              nextTask();
+          }
+      }, 0);
 
 - Evented Models
+
+  + Old-school JavaScript made changes to the DOM directly from input event handlers. New-school JavaScript makes changes to models, which then emit events that cause the DOM to update.
+
+  + Respond to changes to the objects:
+
+    `Object.observe` in ES6.
+
+  + Propagation Model Events:
+
+    Backbone collections automatically propagate events from the models they contain.
+
+  + Cycles and Nested Changes:
+
+    * May cause stack overflow.
+
+    * Sometimes we need two-way bindinng.
+
+    * Safeguards in Backbone:
+
+      - `set` doesn't emit a `change` event if the new value matches the old one.
+
+      - Models can;t emit a change event during one of its own change events.
+
+    * Ember.js's approach:
+
+      Two-way bindings are declared explicitly.
+
+- Cutom jQuery Events
+
+  Will bubble automatically. (also offers the nonbubbling `triggerHandler` method.)
+
+
+
+
+
+Promise and Deferreds
+---------------------
+
+Already learned before.
+
+
+  
+
+
+Flow Control with Async.js
+--------------------------
