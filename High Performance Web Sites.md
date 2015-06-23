@@ -1,4 +1,5 @@
 1. Making Fewer HTTP Requests
+
 	- Image Maps
 		+ server-side
 		+ client-side (html `<map></map>` tag)
@@ -17,12 +18,14 @@
 2. Use a Content Delivery Network
 
 3. Add an Expire Header
+
 	- `Expires: Thu, 15 Apr 2010 20:00:00 GMT` (HTTP Response)
 	- `Cache-Control: max-age=315360000` (HTTP Response) (only HTTP 1.1, but all common web browsers support that so it's not even a problem)
     - any component that changes infrequently should include a far future `Expires` header
     - revving filenames to update
 
 4. Gzip Components
+
 	- `Accept-Encoding: gzip, deflate` (HTTP Request)
 	- `Content-Encoding:: gzip` (HTTP Response)
 	- gzip any text response (HTML documents, scripts, stylesheets, XML & JSON)
@@ -40,3 +43,18 @@
 	  for more information, refer to [this article](http://www.stevesouders.com/blog/2009/04/09/dont-use-import/)
 
 6. Put Scripts at the Bottom
+
+	- HTML/1.1 specification suggests that browsers download two components in parallel per hostname (while most browsers set a much larger upper bound)
+
+		* can simply use CNAMEs (DNS aliases) to split the components across multiple hostnames
+		* too many parallel downloads can degrade performance depending on the bandwidth and CPU speed
+
+	- everything below the script won't render until the script is loaded
+
+	- all components below the script don't start downloading until the script is done
+
+	- in Firefox even *deferred scripts* block rendering and parallel downloads (but Okay in both IE and Chrome)
+
+7. Avoid CSS Expressions
+
+8. Make JavaScript and CSS External
